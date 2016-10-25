@@ -16,3 +16,8 @@ function findMarkets(zip) {
         console.log(mapArr);
     }
 }
+
+function enterZip() {
+    var zip = $("input[name='zip']").val();
+    findMarkets(zip);
+}

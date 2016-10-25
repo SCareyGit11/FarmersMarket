@@ -18,6 +18,10 @@
                  var zip = $("input[name='zip']").val();
                  findMarkets(zip);
              })
+             $("#zipform").submit(function(event) {
+                 event.preventDefault();
+                 enterZip();
+             })
          })
      </script>
      <script>
@@ -30,7 +34,7 @@
     <body>
         <h1>Welcome to the Farmers' Markets World!</h1>
         <h3>If you want to find the Farmers' Markets around you, go ahead and fill in the fields:</h3>
-        <form class="" action="/" method="post">
+        <form id = "zipform" class="" onsubmit="" method="post">
             {% csrf_token %}
             <label for="zip">Zip Code: </label>
             <input id = "zipcode" type="text" name="zip" value="">
@@ -89,7 +93,7 @@
         <div id="map" style="width:40%;height:200px"></div>
 
         <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
-        
+
 
         <br />
         <form class="" action='/results' method="post">
