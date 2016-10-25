@@ -10,34 +10,93 @@
         <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
      <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+     <script src = {% static 'farmers/js/farket.js' %}></script>
 
      <!-- Javascript -->
+     <script type="text/javascript">
+         $(document).ready(function() {
+             $("button").click(function() {
+                 var zip = $("input[name='zip']").val();
+                 findMarkets(zip);
+             })
+         })
+     </script>
      <script>
         $(function() {
            $( "#datepicker-12" ).datepicker();
            $( "#datepicker-12" ).datepicker("setDate", "10w+1");
-        });
-
-
+       });
      </script>
     </head>
     <body>
       {% include '../login_reg_app/logoutindex.html' %}
         <h1>Welcome to the Farmers' Markets World!</h1>
         <h3>If you want to find the Farmers' Markets around you, go ahead and fill in the fields:</h3>
-        <form>
-            <label for="zipcode">Zip Code:
-                <input type="text" name="zipcode" value="" placeholder="Zip Code">
-            </label>
+        <form class="" action="/" method="post">
+            {% csrf_token %}
+            <label for="zip">Zip Code: </label>
+            <input id = "zipcode" type="text" name="zip" value="">
+            <button type="button" name="button">Submit</button>
         </form>
         <p>Day: <input type="text" id="datepicker-12"></p>
         <br />
-        <button type="location" name="location">Use Current Location</button>
+        <button type="location" name="location" onclick="getLocation()">Use Current Location</button>
+
+        <script>
+        var x = document.getElementById("map");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+            var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+            +latlon+"&zoom=14&size=400x300&sensor=false";
+            document.getElementById("map").innerHTML = "<img src='"+img_url+"'>";
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML = "User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML = "Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML = "The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML = "An unknown error occurred."
+                    break;
+            }
+        }
+
+        function myMap() {
+          var mapCanvas = document.getElementById("map");
+          var mapOptions = {
+            center: new google.maps.LatLng(51.5, -0.2),
+            zoom: 10
+          }
+          var map = new google.maps.Map(mapCanvas, mapOptions);
+        }
+        </script>
+
+        <div id="map" style="width:40%;height:200px"></div>
+
+        <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+        
+
         <br />
-        <div id="map"></div>
-        <br />
-        <form class="" action="/results" method="post">
-            <input type="button" name="find" value="Find the markets around you!">
+        <form class="" action='/results' method="post">
+            {% csrf_token %}
+            <input type="submit" name="find" value="Find the markets around you!">
         </form>
     </body>
 </html>
