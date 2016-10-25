@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from views import index,show_fMarket
+from views import index,show_fMarket,results
 from ..login_reg_app.views import login, register, success, logout
 
 urlpatterns = [
