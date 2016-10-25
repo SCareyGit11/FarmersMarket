@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Welcome Page</title>
          {% load staticfiles %}
+         {% include '../login_reg_app/header.html' %}
         <link rel="stylesheet" href="{% static 'farmers/css/main.css' %}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
@@ -32,6 +33,7 @@
      </script>
     </head>
     <body>
+      {% include '../login_reg_app/logoutindex.html' %}
         <h1>Welcome to the Farmers' Markets World!</h1>
         <h3>If you want to find the Farmers' Markets around you, go ahead and fill in the fields:</h3>
         <form id = "zipform" class="" onsubmit="" method="post">

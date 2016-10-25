@@ -1,7 +1,13 @@
 from django.conf.urls import url
-from . import views
+from views import index,show_fMarket,results
+from ..login_reg_app.views import login, register, success, logout
 
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^results$', views.results)
+    url(r'^$', index),
+    url(r'^main$', show_fMarket),
+    url(r'^login$', login),
+    url(r'^register$', register),
+    url(r'^success$', success),
+    url(r'^logout$', logout),
+    rl(r'^results$', results)
 ]
