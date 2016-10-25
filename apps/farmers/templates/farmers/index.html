@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Welcome Page</title>
+         {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'farmers/css/main.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+     <!-- Javascript -->
+     <script>
+        $(function() {
+           $( "#datepicker-12" ).datepicker();
+           $( "#datepicker-12" ).datepicker("setDate", "10w+1");
+        });
+
+
+     </script>
+    </head>
+    <body>
+        <h1>Welcome to the Farmers' Markets World!</h1>
+        <h3>If you want to find the Farmers' Markets around you, go ahead and fill in the fields:</h3>
+        <form>
+            <label for="zipcode">Zip Code:
+                <input type="text" name="zipcode" value="" placeholder="Zip Code">
+            </label>
+        </form>
+        <p>Day: <input type="text" id="datepicker-12"></p>
+        <br />
+        <button type="location" name="location">Use Current Location</button>
+        <br />
+        <div id="map"></div>
+        <br />
+        <form class="" action="/results" method="post">
+            <input type="button" name="find" value="Find the markets around you!">
+        </form>
+    </body>
+</html>
