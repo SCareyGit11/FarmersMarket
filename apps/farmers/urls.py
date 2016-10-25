@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^register$', register),
     url(r'^success$', success),
     url(r'^logout$', logout),
-    rl(r'^results$', results)
+    url(r'^results$', results)
 ]
