@@ -15,15 +15,14 @@
         $(function() {
            $( "#datepicker-12" ).datepicker();
            $( "#datepicker-12" ).datepicker("setDate", "10w+1");
-        });
-
-
+       });
      </script>
     </head>
     <body>
         <h1>Welcome to the Farmers' Markets World!</h1>
         <h3>If you want to find the Farmers' Markets around you, go ahead and fill in the fields:</h3>
         <form>
+            {% csrf_token %}
             <label for="zipcode">Zip Code:
                 <input type="text" name="zipcode" value="" placeholder="Zip Code">
             </label>
@@ -32,10 +31,25 @@
         <br />
         <button type="location" name="location">Use Current Location</button>
         <br />
-        <div id="map"></div>
+
+        <div id="map" style="width:40%;height:200px"></div>
+
+        <script>
+        function myMap() {
+          var mapCanvas = document.getElementById("map");
+          var mapOptions = {
+            center: new google.maps.LatLng(51.5, -0.2),
+            zoom: 10
+          }
+          var map = new google.maps.Map(mapCanvas, mapOptions);
+        }
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
         <br />
-        <form class="" action="/results" method="post">
-            <input type="button" name="find" value="Find the markets around you!">
+        <form class="" action='/results' method="post">
+            {% csrf_token %}
+            <input type="submit" name="find" value="Find the markets around you!">
         </form>
     </body>
 </html>

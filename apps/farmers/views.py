@@ -5,4 +5,5 @@ def index(request):
     return render(request, 'farmers/index.html')
 
 def results(request):
-    return render(request, 'farmers/results.html')
+    if request.method == 'POST':
+        return render(request, 'farmers/results.html')
