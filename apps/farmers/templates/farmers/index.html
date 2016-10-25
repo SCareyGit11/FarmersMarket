@@ -29,12 +29,44 @@
         </form>
         <p>Day: <input type="text" id="datepicker-12"></p>
         <br />
-        <button type="location" name="location">Use Current Location</button>
-        <br />
-
-        <div id="map" style="width:40%;height:200px"></div>
+        <button type="location" name="location" onclick="getLocation()">Use Current Location</button>
 
         <script>
+        var x = document.getElementById("map");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+            var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+            +latlon+"&zoom=14&size=400x300&sensor=false";
+            document.getElementById("map").innerHTML = "<img src='"+img_url+"'>";
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML = "User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML = "Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML = "The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML = "An unknown error occurred."
+                    break;
+            }
+        }
+
         function myMap() {
           var mapCanvas = document.getElementById("map");
           var mapOptions = {
@@ -45,7 +77,11 @@
         }
         </script>
 
+        <div id="map" style="width:40%;height:200px"></div>
+
         <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+        
+
         <br />
         <form class="" action='/results' method="post">
             {% csrf_token %}
