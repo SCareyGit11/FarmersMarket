@@ -9,8 +9,17 @@
         <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
      <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+     <script src = {% static 'farmers/js/farket.js' %}></script>
 
      <!-- Javascript -->
+     <script type="text/javascript">
+         $(document).ready(function() {
+             $("button").click(function() {
+                 var zip = $("input[name='zip']").val();
+                 findMarkets(zip);
+             })
+         })
+     </script>
      <script>
         $(function() {
            $( "#datepicker-12" ).datepicker();
@@ -21,11 +30,11 @@
     <body>
         <h1>Welcome to the Farmers' Markets World!</h1>
         <h3>If you want to find the Farmers' Markets around you, go ahead and fill in the fields:</h3>
-        <form>
+        <form class="" action="/" method="post">
             {% csrf_token %}
-            <label for="zipcode">Zip Code:
-                <input type="text" name="zipcode" value="" placeholder="Zip Code">
-            </label>
+            <label for="zip">Zip Code: </label>
+            <input id = "zipcode" type="text" name="zip" value="">
+            <button type="button" name="button">Submit</button>
         </form>
         <p>Day: <input type="text" id="datepicker-12"></p>
         <br />
